@@ -1,8 +1,13 @@
-
+import { Outlet } from "react-router-dom";
+import NavigationBar from "../NavigationBar/NavigationBar";
+ 
 const Layout = () => {
   return (
-    <div>Layout</div>
-  )
-}
-
-export default Layout
+    <>
+      <NavigationBar />
+      <Outlet />
+    </>
+  );
+};
+ 
+export default Layout;
