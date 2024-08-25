@@ -1,3 +1,6 @@
+import PropTypes from "prop-types";
+import { Outlet } from "react-router-dom";
+
 const PublicRoutes = ({isAuthenticated, redirectPath="/", children}) => {
   if (isAuthenticated) {
       return <Navigate replace to={redirectPath} />;

@@ -16,6 +16,9 @@ export default {
         'font-color-1': '#2F2F2F',
         'font-color-2': '#000000',
       },
+      backgroundImage: {
+        'custom-gradient': 'linear-gradient(to right, #FF7674, #FF74B7, #FF74FC, #FFBC74)',
+      },
     },
   },
   plugins: [],
