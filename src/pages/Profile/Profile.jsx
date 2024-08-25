@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { getProfile } from "../../services/findyServices";
+import { RiArrowLeftWideLine } from "react-icons/ri";
+import { HiEllipsisHorizontal } from "react-icons/hi2";
 
 
 
@@ -32,8 +34,11 @@ const Profile = () => {
           src={profileData.backgroundImageUrl} 
           alt="Profile Background" 
         />
+
+        <RiArrowLeftWideLine className="absolute top-6 left-6 text-2xl" style={{ strokeWidth: 0.5 }}  />
+        <HiEllipsisHorizontal className="absolute top-6 right-7 text-2xl" style={{ strokeWidth: 0.5 }} />
+
         <div className="absolute inset-x-0 bottom-0 transform translate-y-1/2">
-        
           <img 
             className="mx-auto h-24 w-24 rounded-full border-4 object-cover"
             src={profileData.profileImageUrl} 
@@ -63,8 +68,8 @@ const Profile = () => {
 
       {/* Follow and Messages Bottons */}
       <section className="font-balsamiq flex justify-around mt-4">
-        <button className="bg-color-1 text-white font-semibold py-2 px-20 rounded-xl">Follow</button>
-        <button className="bg-color-1 text-white font-semibold py-2 px-20 rounded-xl">Message</button>
+        <button className="bg-color-1 text-white font-bold py-2 px-16 rounded-xl">Follow</button>
+        <button className="bg-color-1 text-white font-bold py-2 px-16 rounded-xl">Message</button>
       </section>
 
       {/* Tab Section */}
@@ -81,13 +86,51 @@ const Profile = () => {
           {profileData.photos.map((photoObj, index) => {
             {/* Extract the URL of the object photo */}
             const photoUrl = Object.values(photoObj)[0];
+
+            {/* Styling image */}
+            let customClasses = "";
+            let imgClasses = "w-full h-full object-cover";
+
+            switch(index) {
+              case 0:
+                customClasses = "w-[190px] h-[190px] ";
+                break;
+              case 1:
+                customClasses = "w-[190px] h-[213px]";
+                break;
+              case 2:
+                customClasses = "w-[190px] h-[198px]";
+                break;
+              case 3:
+                customClasses = "w-[190px] h-[204px]";
+                break;
+              case 4:
+                customClasses = "w-[190px] h-[216px]";
+                break;
+              case 5:
+                customClasses = "w-[190px] h-[216px]";
+                break;
+              default:
+                customClasses = "";
+            }
+
+            if (index === 1) {
+              imgClasses += " object-[top]";
+            } else if (index === 3) {
+              imgClasses += " object-[top]";
+            } else if (index === 4) {
+              imgClasses += " object-[top]";
+            }
+
             return (
-              <img
-                key={index}
-                className="w-full h-auto object-cover rounded"
-                src={photoUrl}
-                alt={`Photo ${index + 1}`}
-              />
+              <div key={index} className={`overflow-hidden rounded-3xl ${customClasses}`}>
+                <img
+                  className={imgClasses}
+                  src={photoUrl}
+                  alt={`Photo ${index + 1}`}
+                />
+              </div>
+
             );
           })}
         </div>
