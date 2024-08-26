@@ -5,16 +5,13 @@
 @tailwind utilities;
 
 
-.custom-gradient {
-    @apply h-auto w-full;
-    background: linear-gradient(
-      to bottom left,
-      rgba(255, 118, 116, 0.9) 1%,    /* El color #FF7674 con 80% de opacidad */
-      rgba(255, 255, 255, 0.8) 20%,   /* El color blanco (#FFF) con 80% de opacidad */
-      rgba(255, 255, 255, 0.8) 50%,   /* Mantener el color blanco con 80% de opacidad */
-      rgba(250, 197, 141, 0.8) 60%    /* El color #FFBC74 con 80% de opacidad */
-    );
-}
+/* .custom-gradient {
+    background-image: url(../src/assets/Group\ 28.jpg);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    background-repeat: no-repeat;
+} */
 
 .custom-border-gradient {
     border-width: 4px; /* Mantén el grosor del borde que ya tienes */

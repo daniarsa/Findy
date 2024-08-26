@@ -17,7 +17,7 @@ export default {
         'font-color-2': '#000000',
       },
       backgroundImage: {
-        'custom-gradient': 'linear-gradient(to right, #FF7674, #FF74B7, #FF74FC, #FFBC74)',
+        'custom-gradient': "url('../src/assets/Group 28.jpg')",
       },
     },
   },
