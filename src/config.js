@@ -1,8 +1,9 @@
-const URL_API = "https://minibackend-findy-3039.onrender.com/";
+const URL_API = "https://minibackend-findy-3039.onrender.com";
 
 const endpoints = {
-  users: `${URL_API}users`,
-  posts: `${URL_API}posts`,
+  feed: `${URL_API}feed`,
+  profile: `${URL_API}profile`,
+  imageDetail: `${URL_API}imageDeatil`,
 };
 
 export default endpoints;
