@@ -16,6 +16,9 @@ export default {
         'font-color-1': '#2F2F2F',
         'font-color-2': '#000000',
       },
+      backgroundImage: {
+        'custom-gradient': "url('../src/assets/Group 28.jpg')",
+      },
     },
   },
   plugins: [],
