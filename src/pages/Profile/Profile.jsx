@@ -141,6 +141,9 @@ const Profile = () => {
             );
           })}
         </div>
+        <div>
+          <p>Hola Prueba</p>
+        </div>
       </section>
     </main>
   );
