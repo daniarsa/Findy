@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import React from 'react'
-=======
->>>>>>> develop
 
 const NoMatch = () => {
   return (
