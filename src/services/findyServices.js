@@ -23,10 +23,10 @@ export const getProfile = async () => {
 
 export const getImageDetail = async () => {
     try {
-        const response = await axios.get(endpoints.imageDetail); response
+        const response = await axios.get(`${endpoints.imageDetail}`);
         return response.data;
     } catch (error) {
         console.error(error);
         return null;
     }
-}
+};
