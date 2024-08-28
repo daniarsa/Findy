@@ -41,8 +41,8 @@ const Feed = () => {
             <div key={index} className="story flex flex-col justify-items-center">
               {/* Mostrar el ícono MdOutlineAdd solo para el primer story con title "Your Story" */}
               {story.title === "Your Story" && index === 0 && (
-                <div className="absolute top-[103px] left-[221px] ">
-                  <MdOutlineAdd className="text-color-5 w-7 h-7 font-bold" />
+                <div className="absolute top-[103px] left-[485px] ">
+                  <MdOutlineAdd className="text-color-1 w-7 h-7 font-bold" />
                 </div>
               )}
               <img src={story.image2} alt={story.title} className="mx-auto h-16 w-16 object-cover inline-block rounded-full p-[2.5px] bg-gradient-to-r from-color-1 via-color-2 to-color-4" />
