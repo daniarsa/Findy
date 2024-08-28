@@ -1,5 +1,5 @@
-import PropTypes from "prop-types";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom"
+import PropTypes from "prop-types"
 
 const PublicRoutes = ({isAuthenticated, redirectPath="/", children}) => {
   if (isAuthenticated) {
