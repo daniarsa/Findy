@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import { getProfile } from "../../services/findyServices";
 import { RiArrowLeftWideLine } from "react-icons/ri";
 import { HiEllipsisHorizontal } from "react-icons/hi2";
-
-
+import EditProfileModal from "../../components/Edit/Edit"
 
 const Profile = () => {
   const [profileData, setProfileData] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect (() => {
+  useEffect(() => {
     const fetchProfileData = async () => {
       const data = await getProfile();
       setProfileData(data);
@@ -20,31 +20,46 @@ const Profile = () => {
     return <p>Loading...</p>;
   }
 
+  // Función para abrir el modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Función para cerrar el modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const updateProfileData = (updatedData) => {
+    setProfileData(updatedData);
+  };
+
+  // Función para actualizar los datos del perfil
+  const updateProfile = async (updatedProfileData) => {
+    try {
+      updateProfileData(updatedProfileData);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
   return (
-    <main className="bg-custom-gradient bg-cover bg-center bg-no-repeat max-w-md mx-auto shadow-lg rounded-lg overflow-hidden w-full"
-    // style={{
-    //   width: "100%",   // Equivalente a w-full
-    //   background: "linear-gradient(to bottom left, #FF7674 1%, #FEE9D7 60%,#FFBC74)",
-    // }}
-    >
+    <main className="bg-custom-gradient bg-cover bg-center bg-no-repeat max-w-md mx-auto shadow-lg rounded-lg overflow-hidden w-full">
       {/* Header with the image */}
-      <header className=" relative">
+      <header className="relative">
         <img 
           className="w-full h-48 object-cover"
           src={profileData.backgroundImageUrl} 
           alt="Profile Background" 
         />
 
-        <RiArrowLeftWideLine className="absolute top-6 left-6 text-2xl" style={{ strokeWidth: 0.5 }}  />
-        <HiEllipsisHorizontal className="absolute top-6 right-7 text-2xl" style={{ strokeWidth: 0.5 }} />
+        <RiArrowLeftWideLine className="absolute top-6 left-6 text-2xl" style={{ strokeWidth: 0.5 }} />
+        <HiEllipsisHorizontal 
+          className="absolute top-6 right-7 text-2xl cursor-pointer" 
+          style={{ strokeWidth: 0.5 }} 
+          onClick={openModal} // Abre el modal al hacer clic
+        />
 
-        {/* <div className=" absolute inset-x-0 bottom-0 transform translate-y-1/2">
-          <img 
-            className="custom-border-gradient mx-auto h-24 w-24 rounded-full border-4 object-cover"
-            src={profileData.profileImageUrl} 
-            alt="Profile" 
-          />
-        </div> */}
         <div className="relative inline-block rounded-full p-[2.5px] bg-gradient-to-r from-color-1 via-color-2 to-color-4 transform translate-y-1/2 absolute left-1/2 bottom-20 -translate-x-1/2">
           <img 
             className="h-24 w-24 rounded-full object-cover mx-auto" 
@@ -73,7 +88,7 @@ const Profile = () => {
         </div>
       </section>
 
-      {/* Follow and Messages Bottons */}
+      {/* Follow and Messages Buttons */}
       <section className="font-balsamiq flex justify-around mt-[-2rem]">
         <button className="bg-color-1 text-white font-bold py-2 px-16 rounded-xl">Follow</button>
         <button className="bg-color-1 text-white font-bold py-2 px-16 rounded-xl">Message</button>
@@ -91,10 +106,7 @@ const Profile = () => {
         {/* Photos Gallery */}
         <div className="grid grid-cols-2 gap-2 p-4">
           {profileData.photos.map((photoObj, index) => {
-            {/* Extract the URL of the object photo */}
             const photoUrl = Object.values(photoObj)[0];
-
-            {/* Styling image */}
             let customClasses = "";
             let imgClasses = "w-full h-full object-cover";
 
@@ -121,11 +133,7 @@ const Profile = () => {
                 customClasses = "";
             }
 
-            if (index === 1) {
-              imgClasses += " object-[top]";
-            } else if (index === 3) {
-              imgClasses += " object-[top]";
-            } else if (index === 4) {
+            if (index === 1 || index === 3 || index === 4) {
               imgClasses += " object-[top]";
             }
 
@@ -137,22 +145,20 @@ const Profile = () => {
                   alt={`Photo ${index + 1}`}
                 />
               </div>
-
             );
           })}
         </div>
-        <div>
-          <p>Hola Prueba</p>
-        </div>
       </section>
+
+      {/* Modal para editar perfil */}
+      <EditProfileModal
+        isOpen={isModalOpen}
+        initialProfileData={profileData}
+        onUpdateProfile={updateProfile}
+        onClose={closeModal}
+      />
     </main>
   );
 };
 
 export default Profile;
-
-
-
-
-
-
