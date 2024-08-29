@@ -1,27 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useProfile } from "../../context/ProfileContext"; // Importar el hook personalizado
 
 const ProfileSchema = Yup.object().shape({
   name: Yup.string().required('El nombre es requerido'),
   bio: Yup.string().required('La biografía es requerida'),
   description: Yup.string().required('La descripción es requerida'),
-  profileImageUrl: Yup.mixed().required('La imagen de perfil es requerida'),
-  backgroundImageUrl: Yup.mixed().required('La imagen de fondo es requerida'),
+  profileImageUrl: Yup.string().required('La imagen de perfil es requerida'),
+  backgroundImageUrl: Yup.string().required('La imagen de fondo es requerida'),
 });
 
-const EditProfileModal = ({ isOpen, onClose, initialProfileData, onUpdateProfile }) => {
-  if (!isOpen) return null;
+const EditProfileModal = ({ isOpen, onClose }) => {
+  const { profileData, dispatch } = useProfile(); // Utiliza el contexto
+  const [profileImagePreview, setProfileImagePreview] = useState(profileData.profileImageUrl);
+  const [backgroundImagePreview, setBackgroundImagePreview] = useState(profileData.backgroundImageUrl);
 
-  const [profileImagePreview, setProfileImagePreview] = useState(initialProfileData.profileImageUrl);
-  const [backgroundImagePreview, setBackgroundImagePreview] = useState(initialProfileData.backgroundImageUrl);
+  useEffect(() => {
+    setProfileImagePreview(profileData.profileImageUrl);
+    setBackgroundImagePreview(profileData.backgroundImageUrl);
+  }, [profileData.profileImageUrl, profileData.backgroundImageUrl]);
+
+  if (!isOpen) return null;
 
   const handleSubmit = async (values, { setSubmitting }) => {
     const data = {
+      ...profileData,
       ...values,
-      profileImageUrl: values.profileImageUrl || '', // Asegúrate de incluir una URL válida
-      backgroundImageUrl: values.backgroundImageUrl || '', // Asegúrate de incluir una URL válida
     };
 
     try {
@@ -30,7 +36,8 @@ const EditProfileModal = ({ isOpen, onClose, initialProfileData, onUpdateProfile
           'Content-Type': 'application/json',
         },
       });
-      onUpdateProfile(response.data);
+
+      dispatch({ type: 'UPDATE_PROFILE', payload: response.data }); // Actualiza el contexto
       alert('Perfil actualizado con éxito');
       onClose();
     } catch (error) {
@@ -41,25 +48,17 @@ const EditProfileModal = ({ isOpen, onClose, initialProfileData, onUpdateProfile
     }
   };
 
-  const handleImageChange = (e, setFieldValue, setImagePreview) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFieldValue(e.target.name, URL.createObjectURL(file));
-      setImagePreview(URL.createObjectURL(file));
-    }
-  };
-
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
       <div className="modal-content p-10 rounded-lg shadow-lg bg-white">
         <button onClick={onClose} className="modal-close-button">X</button>
         <h2 className="text-xl font-bold mb-4">Editar Perfil</h2>
         <Formik
-          initialValues={initialProfileData}
+          initialValues={profileData}
           validationSchema={ProfileSchema}
           onSubmit={handleSubmit}
         >
-          {({ setFieldValue, isSubmitting }) => (
+          {({ setFieldValue, values, isSubmitting }) => (
             <Form>
               <div className="mb-4">
                 <label className="block text-sm font-medium">Nombre</label>
@@ -86,6 +85,10 @@ const EditProfileModal = ({ isOpen, onClose, initialProfileData, onUpdateProfile
                   name="profileImageUrl"
                   className="input"
                   placeholder="Introduce la URL de la imagen de perfil"
+                  onChange={(e) => {
+                    setFieldValue("profileImageUrl", e.target.value);
+                    setProfileImagePreview(e.target.value); // Actualizar preview
+                  }}
                 />
                 <ErrorMessage name="profileImageUrl" component="div" className="text-red-600 text-sm" />
                 <img
@@ -102,6 +105,10 @@ const EditProfileModal = ({ isOpen, onClose, initialProfileData, onUpdateProfile
                   name="backgroundImageUrl"
                   className="input"
                   placeholder="Introduce la URL de la imagen de fondo"
+                  onChange={(e) => {
+                    setFieldValue("backgroundImageUrl", e.target.value);
+                    setBackgroundImagePreview(e.target.value); // Actualizar preview
+                  }}
                 />
                 <ErrorMessage name="backgroundImageUrl" component="div" className="text-red-600 text-sm" />
                 <img
@@ -110,7 +117,6 @@ const EditProfileModal = ({ isOpen, onClose, initialProfileData, onUpdateProfile
                   className={`mt-2 h-20 w-full object-cover ${!backgroundImagePreview ? 'hidden' : ''}`}
                 />
               </div>
-
 
               <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
                 {isSubmitting ? 'Actualizando...' : 'Guardar Cambios'}
