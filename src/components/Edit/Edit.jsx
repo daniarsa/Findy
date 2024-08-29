@@ -25,7 +25,7 @@ const EditProfileModal = ({ isOpen, onClose, initialProfileData, onUpdateProfile
     };
 
     try {
-      const response = await axios.put('https://testing-findy.onrender.com/profile', data, {
+      const response = await axios.put('https://minibackend-findy-3039.onrender.com/profile', data, {
         headers: {
           'Content-Type': 'application/json',
         },
