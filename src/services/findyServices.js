@@ -29,9 +29,4 @@ export const getImageDetail = async () => {
         console.error(error);
         return null;
     }
-<<<<<<< HEAD
 };
-=======
-}
-
->>>>>>> feature/edit-profile
