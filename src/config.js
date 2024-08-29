@@ -1,4 +1,5 @@
-const URL_API = "https://minibackend-findy-3039.onrender.com/";
+const URL_API = "https://minibackend-findy-3039.onrender.com/"; 
+// const URL_API = "https://testing-findy.onrender.com/";
 
 const endpoints = {
   feed: `${URL_API}feed`,
