@@ -7,6 +7,7 @@ import EditProfileModal from "../../components/Edit/Edit"
 const Profile = () => {
   const [profileData, setProfileData] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("Photos");
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -42,6 +43,63 @@ const Profile = () => {
       console.error("Error updating profile:", error);
     }
   };
+
+
+   // Función para renderizar el contenido basado en la sección activa
+   const renderContent = () => {
+    if (activeSection === "Photos") {
+      return (
+        <div className="grid grid-cols-2 gap-2 p-4">
+          {profileData.photos.map((photoObj, index) => {
+            const photoUrl = Object.values(photoObj)[0];
+            let customClasses = "";
+            let imgClasses = "w-full h-full object-cover";
+
+            switch(index) {
+              case 0:
+                customClasses = "w-[190px] h-[190px] ";
+                break;
+              case 1:
+                customClasses = "w-[190px] h-[213px]";
+                break;
+              case 2:
+                customClasses = "w-[190px] h-[198px]";
+                break;
+              case 3:
+                customClasses = "w-[190px] h-[204px]";
+                break;
+              case 4:
+                customClasses = "w-[190px] h-[216px]";
+                break;
+              case 5:
+                customClasses = "w-[190px] h-[216px]";
+                break;
+              default:
+                customClasses = "";
+            }
+
+            if (index === 1 || index === 3 || index === 4) {
+              imgClasses += " object-[top]";
+            }
+
+            return (
+              <div key={index} className={`overflow-hidden rounded-3xl ${customClasses}`}>
+                <img
+                  className={imgClasses}
+                  src={photoUrl}
+                  alt={`Photo ${index + 1}`}
+                />
+              </div>
+            );
+          })}
+        </div>
+      );
+    } else {
+      return <div className="text-center p-4">No content to display</div>;
+    }
+  };
+
+
 
   return (
     <main className="bg-custom-gradient bg-cover bg-center bg-no-repeat max-w-md mx-auto shadow-lg rounded-lg overflow-hidden w-full">
@@ -97,57 +155,34 @@ const Profile = () => {
       {/* Tab Section */}
       <section className="font-balsamiq bg-color-5 rounded-3xl">
         <div className="flex justify-around mt-6">
-          <button className="text-font-color-2 font-semibold py-2 border-b-2 border-color-1">Photos</button>
-          <button className="text-font-color-2 py-2">Videos</button>
-          <button className="text-font-color-2 py-2">Album</button>
-          <button className="text-font-color-2 py-2">Tab</button>
+          <button 
+            className={`text-font-color-2 py-2 ${activeSection === "Photos" ? "font-semibold border-b-2 border-color-1" : ""}`}
+            onClick={() => setActiveSection("Photos")}
+          >
+            Photos
+          </button>
+          <button 
+            className={`text-font-color-2 py-2 ${activeSection === "Videos" ? "font-semibold border-b-2 border-color-1" : ""}`}
+            onClick={() => setActiveSection("Videos")}
+          >
+            Videos
+          </button>
+          <button 
+            className={`text-font-color-2 py-2 ${activeSection === "Album" ? "font-semibold border-b-2 border-color-1" : ""}`}
+            onClick={() => setActiveSection("Album")}
+          >
+            Album
+          </button>
+          <button 
+            className={`text-font-color-2 py-2 ${activeSection === "Tag" ? "font-semibold border-b-2 border-color-1" : ""}`}
+            onClick={() => setActiveSection("Tag")}
+          >
+            Tag
+          </button>
         </div>
 
-        {/* Photos Gallery */}
-        <div className="grid grid-cols-2 gap-2 p-4">
-          {profileData.photos.map((photoObj, index) => {
-            const photoUrl = Object.values(photoObj)[0];
-            let customClasses = "";
-            let imgClasses = "w-full h-full object-cover";
-
-            switch(index) {
-              case 0:
-                customClasses = "w-[190px] h-[190px] ";
-                break;
-              case 1:
-                customClasses = "w-[190px] h-[213px]";
-                break;
-              case 2:
-                customClasses = "w-[190px] h-[198px]";
-                break;
-              case 3:
-                customClasses = "w-[190px] h-[204px]";
-                break;
-              case 4:
-                customClasses = "w-[190px] h-[216px]";
-                break;
-              case 5:
-                customClasses = "w-[190px] h-[216px]";
-                break;
-              default:
-                customClasses = "";
-            }
-
-            if (index === 1 || index === 3 || index === 4) {
-              imgClasses += " object-[top]";
-            }
-
-            return (
-              <div key={index} className={`overflow-hidden rounded-3xl ${customClasses}`}>
-                <img
-                  className={imgClasses}
-                  src={photoUrl}
-                  alt={`Photo ${index + 1}`}
-                />
-              </div>
-            );
-          })}
-        </div>
+        {/* Content based on active section */}
+        {renderContent()}
       </section>
 
       {/* Modal para editar perfil */}
