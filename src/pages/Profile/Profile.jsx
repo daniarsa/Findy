@@ -2,49 +2,116 @@ import { useState, useEffect } from "react";
 import { getProfile } from "../../services/findyServices";
 import { RiArrowLeftWideLine } from "react-icons/ri";
 import { HiEllipsisHorizontal } from "react-icons/hi2";
-
-
+import EditProfileModal from "../../components/Edit/Edit"
+import { useProfile } from "../../context/AppContext";
 
 const Profile = () => {
-  const [profileData, setProfileData] = useState(null);
+  // const [profileData, setProfileData] = useState(null);
+  const {profileData, profileDispatch} = useProfile(); //Access to status and dispatch from context
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("Photos");
 
-  useEffect (() => {
+  useEffect(() => {
     const fetchProfileData = async () => {
       const data = await getProfile();
-      setProfileData(data);
+      profileDispatch({ type: 'UPDATE_PROFILE', payload: data }); // Use profileDispatch to update the global state
     };
     fetchProfileData();
-  }, []);
+  }, [profileDispatch]);
 
   if (!profileData) {
     return <p>Loading...</p>;
   }
 
+  // Función para abrir el modal
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  // Función para cerrar el modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  
+   // Función para renderizar el contenido basado en la sección activa
+   const renderContent = () => {
+    if (activeSection === "Photos") {
+      if (!profileData.photos || profileData.photos.length === 0) {
+        return <div>No photos available</div>;
+      }
+      
+      return (
+        <div className="grid grid-cols-2 gap-2 p-4">
+          {profileData.photos.map((photoObj, index) => {
+            const photoUrl = Object.values(photoObj)[0];
+            let customClasses = "";
+            let imgClasses = "w-full h-full object-cover";
+  
+            switch(index) {
+              case 0:
+                customClasses = "w-[190px] h-[190px]";
+                break;
+              case 1:
+                customClasses = "w-[190px] h-[213px]";
+                break;
+              case 2:
+                customClasses = "w-[190px] h-[198px]";
+                break;
+              case 3:
+                customClasses = "w-[190px] h-[204px]";
+                break;
+              case 4:
+                customClasses = "w-[190px] h-[216px]";
+                break;
+              case 5:
+                customClasses = "w-[190px] h-[216px]";
+                break;
+              default:
+                customClasses = "";
+            }
+  
+            if (index === 1 || index === 3 || index === 4) {
+              imgClasses += " object-[top]";
+            }
+  
+            return (
+              <div key={index} className={`overflow-hidden rounded-3xl ${customClasses}`}>
+                <img
+                  className={imgClasses}
+                  src={photoUrl}
+                  alt={`Photo ${index + 1}`}
+                />
+              </div>
+            );
+          })}
+        </div>
+      );
+    } else {
+      return <div className="text-center p-4">No content to display</div>;
+    }
+  };
+  
+
+
+
   return (
-    <main className="bg-custom-gradient bg-cover bg-center bg-no-repeat max-w-md mx-auto shadow-lg rounded-lg overflow-hidden w-full"
-    // style={{
-    //   width: "100%",   // Equivalente a w-full
-    //   background: "linear-gradient(to bottom left, #FF7674 1%, #FEE9D7 60%,#FFBC74)",
-    // }}
-    >
+    <main className="bg-custom-gradient bg-cover bg-center bg-no-repeat max-w-md mx-auto shadow-lg rounded-lg overflow-hidden w-full">
       {/* Header with the image */}
-      <header className=" relative">
+      <header className="relative">
         <img 
           className="w-full h-48 object-cover"
           src={profileData.backgroundImageUrl} 
           alt="Profile Background" 
         />
 
-        <RiArrowLeftWideLine className="absolute top-6 left-6 text-2xl" style={{ strokeWidth: 0.5 }}  />
-        <HiEllipsisHorizontal className="absolute top-6 right-7 text-2xl" style={{ strokeWidth: 0.5 }} />
+        <RiArrowLeftWideLine className="absolute top-6 left-6 text-2xl" style={{ strokeWidth: 0.5 }} />
+        <HiEllipsisHorizontal 
+          className="absolute top-6 right-7 text-2xl cursor-pointer" 
+          style={{ strokeWidth: 0.5 }} 
+          onClick={openModal} // Abre el modal al hacer clic
+        />
 
-        {/* <div className=" absolute inset-x-0 bottom-0 transform translate-y-1/2">
-          <img 
-            className="custom-border-gradient mx-auto h-24 w-24 rounded-full border-4 object-cover"
-            src={profileData.profileImageUrl} 
-            alt="Profile" 
-          />
-        </div> */}
         <div className="relative inline-block rounded-full p-[2.5px] bg-gradient-to-r from-color-1 via-color-2 to-color-4 transform translate-y-1/2 absolute left-1/2 bottom-20 -translate-x-1/2">
           <img 
             className="h-24 w-24 rounded-full object-cover mx-auto" 
@@ -73,7 +140,7 @@ const Profile = () => {
         </div>
       </section>
 
-      {/* Follow and Messages Bottons */}
+      {/* Follow and Messages Buttons */}
       <section className="font-balsamiq flex justify-around mt-[-2rem]">
         <button className="bg-color-1 text-white font-bold py-2 px-16 rounded-xl">Follow</button>
         <button className="bg-color-1 text-white font-bold py-2 px-16 rounded-xl">Message</button>
@@ -82,74 +149,43 @@ const Profile = () => {
       {/* Tab Section */}
       <section className="font-balsamiq bg-color-5 rounded-3xl">
         <div className="flex justify-around mt-6">
-          <button className="text-font-color-2 font-semibold py-2 border-b-2 border-color-1">Photos</button>
-          <button className="text-font-color-2 py-2">Videos</button>
-          <button className="text-font-color-2 py-2">Album</button>
-          <button className="text-font-color-2 py-2">Tab</button>
+          <button 
+            className={`text-font-color-2 py-2 ${activeSection === "Photos" ? "font-semibold border-b-2 border-color-1" : ""}`}
+            onClick={() => setActiveSection("Photos")}
+          >
+            Photos
+          </button>
+          <button 
+            className={`text-font-color-2 py-2 ${activeSection === "Videos" ? "font-semibold border-b-2 border-color-1" : ""}`}
+            onClick={() => setActiveSection("Videos")}
+          >
+            Videos
+          </button>
+          <button 
+            className={`text-font-color-2 py-2 ${activeSection === "Album" ? "font-semibold border-b-2 border-color-1" : ""}`}
+            onClick={() => setActiveSection("Album")}
+          >
+            Album
+          </button>
+          <button 
+            className={`text-font-color-2 py-2 ${activeSection === "Tag" ? "font-semibold border-b-2 border-color-1" : ""}`}
+            onClick={() => setActiveSection("Tag")}
+          >
+            Tag
+          </button>
         </div>
 
-        {/* Photos Gallery */}
-        <div className="grid grid-cols-2 gap-2 p-4">
-          {profileData.photos.map((photoObj, index) => {
-            {/* Extract the URL of the object photo */}
-            const photoUrl = Object.values(photoObj)[0];
-
-            {/* Styling image */}
-            let customClasses = "";
-            let imgClasses = "w-full h-full object-cover";
-
-            switch(index) {
-              case 0:
-                customClasses = "w-[190px] h-[190px] ";
-                break;
-              case 1:
-                customClasses = "w-[190px] h-[213px]";
-                break;
-              case 2:
-                customClasses = "w-[190px] h-[198px]";
-                break;
-              case 3:
-                customClasses = "w-[190px] h-[204px]";
-                break;
-              case 4:
-                customClasses = "w-[190px] h-[216px]";
-                break;
-              case 5:
-                customClasses = "w-[190px] h-[216px]";
-                break;
-              default:
-                customClasses = "";
-            }
-
-            if (index === 1) {
-              imgClasses += " object-[top]";
-            } else if (index === 3) {
-              imgClasses += " object-[top]";
-            } else if (index === 4) {
-              imgClasses += " object-[top]";
-            }
-
-            return (
-              <div key={index} className={`overflow-hidden rounded-3xl ${customClasses}`}>
-                <img
-                  className={imgClasses}
-                  src={photoUrl}
-                  alt={`Photo ${index + 1}`}
-                />
-              </div>
-
-            );
-          })}
-        </div>
+        {/* Content based on active section */}
+        {renderContent()}
       </section>
+
+      {/* Modal para editar perfil */}
+      <EditProfileModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
     </main>
   );
 };
 
 export default Profile;
-
-
-
-
-
-

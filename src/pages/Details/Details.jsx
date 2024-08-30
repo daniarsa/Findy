@@ -1,37 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getImageDetail } from "../../services/findyServices";
-import { IoIosArrowBack, IoIosMore, IoMdSend   } from "react-icons/io";
-import { FaRegComment, FaHeart  } from "react-icons/fa";
+import { getImageDetail, getProfile, getFeed } from "../../services/findyServices";
+import { IoIosArrowBack, IoIosMore, IoMdSend } from "react-icons/io";
+import { FaRegComment, FaHeart } from "react-icons/fa";
+import { FiSend } from "react-icons/fi";
 
 
 const Details = () => {
   const [imageDetail, setImageDetail] = useState(null);
+  const [profileData, setProfileData] = useState(null);
+  const [feedData, setFeedData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchImageDetail = async () => {
-      const data = await getImageDetail();
-      setImageDetail(data);
+    const fetchData = async () => {
+      const imageData = await getImageDetail();
+      setImageDetail(imageData);
+
+      const profileInfo = await getProfile();
+      setProfileData(profileInfo);
+
+      const feedInfo = await getFeed();
+      setFeedData(feedInfo);
     };
 
-    fetchImageDetail();
+    fetchData();
   }, []);
 
-  if (!imageDetail) {
+  if (!imageDetail || !profileData || !feedData) {
     return <p>Loading...</p>;
   }
 
   return (
     <div className="details-page bg-custom-gradient bg-cover bg-center bg-no-repeat max-w-md mx-auto shadow-lg rounded-lg overflow-hidden w-full">
-        <div className="relative h-[70vh]">
+      <div className="relative ">
         <img
           src={imageDetail.imageUrl}
           alt="detail"
-          className=" object-cover w-full h-full  rounded-3xl"
+          className="relative top-[10px] object-cover w-full h-full rounded-3xl"
         />
         
-        <div className="absolute inset-x-0 top-0 flex justify-between items-center p-4">
+        <div className="absolute inset-x-0 top-0 flex justify-between items-center p-8">
           <IoIosArrowBack
             onClick={() => navigate("/profile")}
             className="text-3xl cursor-pointer fill-white"
@@ -42,34 +51,28 @@ const Details = () => {
 
       <div className="relative w-80 h-20 ml-[15%] inset-x-0 bottom-[45px] p-4 bg-white text-font-color-2 flex justify-end rounded-3xl">
         <img
-          src={imageDetail.profileImageUrl}
+          src={profileData.profileImageUrl}
           alt="Jennie Kim"
-          className="h-[58px] w-[58px] rounded-full object-cover relative right-[40%] bottom-[10%] border-2 p-[2.5px] bg-gradient-to-r from-color-1 via-color-2 to-color-4"
+          className="h-[58px] w-[58px] rounded-full object-cover relative right-[13%] bottom-[10%] border-2 p-[2.5px] bg-gradient-to-r from-color-1 via-color-2 to-color-4"
         />
-          <FaHeart className="flex h-[24px] w-[24px] fill-color-1" />
-          <p className="relative top-[30px] right-[29px] font-balsamiq ">{imageDetail.likes}</p>
-          <FaRegComment className="relative h-[24px] w-[24px]" />
-          <p className=" relative top-[30px] right-[29px] font-balsamiq" >{imageDetail.commentsCount}</p>
-        </div>
-
-      <div className=" relative p-4 bottom-[30px] ">
-        <p className="text-font-color-1 text-xs font-normal font-baloo ">{imageDetail.description}</p>
+        <p className="relative top-[15px] right-[34px] font-balsamiq text-font-color-2 font-semibold text-sm">
+          {profileData.name}
+        </p>
+        <FaHeart className="flex relative h-[20px] w-[20px] left-[20px]  fill-color-1" />
+        <p className="relative top-[30px] right-[3px] font-balsamiq text-sm">{imageDetail.likes}</p>
+        <FaRegComment className="relative h-[20px] w-[20px] left-[20px]" />
+        <p className="relative top-[30px] font-balsamiq text-sm">{imageDetail.commentsCount}</p>
+        <FiSend className="relative h-[20px] w-[20px] left-[20px] " />
+        <p className="relative top-[30px] font-balsamiq text-sm">2K</p>
       </div>
 
-      {/* <div className="p-4">
-        {imageDetail.comments.map((comment, index) => (
-          <div key={index} className="border-b border-gray-200 py-2">
-            <p className="text-font-color-1 font-balsamiq text-sm">
-              <strong>{comment.username}</strong> {comment.comment}
-            </p>
-            <p className="text-font-color-1 text-sm">{comment.likes} Likes</p>
-          </div>
-        ))}
-      </div> */}
+      <div className="relative p-4 bottom-[30px]">
+        <p className="text-font-color-1 text-xs font-normal font-baloo">{imageDetail.description}</p>
+      </div>
 
       <div className="relative p-4 flex items-center space-x-2">
         <img
-          src={imageDetail.profileImageUrl}
+          src={feedData.stories[0].image2}
           alt="Profile"
           className="h-10 w-10 rounded-full object-cover border-2 p-[2.5px] bg-gradient-to-r from-color-1 via-color-2 to-color-4"
         />
