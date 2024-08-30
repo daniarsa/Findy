@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { getImageDetail, getProfile, getFeed } from "../../services/findyServices";
 import { IoIosArrowBack, IoIosMore, IoMdSend } from "react-icons/io";
 import { FaRegComment, FaHeart } from "react-icons/fa";
+import { FiSend } from "react-icons/fi";
+
 
 const Details = () => {
   const [imageDetail, setImageDetail] = useState(null);
@@ -51,15 +53,17 @@ const Details = () => {
         <img
           src={profileData.profileImageUrl}
           alt="Jennie Kim"
-          className="h-[58px] w-[58px] rounded-full object-cover relative right-[26%] bottom-[10%] border-2 p-[2.5px] bg-gradient-to-r from-color-1 via-color-2 to-color-4"
+          className="h-[58px] w-[58px] rounded-full object-cover relative right-[13%] bottom-[10%] border-2 p-[2.5px] bg-gradient-to-r from-color-1 via-color-2 to-color-4"
         />
-        <p className="relative top-[15px] right-[68px] font-balsamiq text-font-color-2 font-semibold text-sm">
+        <p className="relative top-[15px] right-[34px] font-balsamiq text-font-color-2 font-semibold text-sm">
           {profileData.name}
         </p>
-        <FaHeart className="flex h-[20px] w-[20px] fill-color-1" />
-        <p className="relative top-[30px] right-[24.8px] font-balsamiq text-sm">{imageDetail.likes}</p>
-        <FaRegComment className="relative h-[20px] w-[20px]" />
-        <p className="relative top-[30px] right-[24px] font-balsamiq text-sm">{imageDetail.commentsCount}</p>
+        <FaHeart className="flex relative h-[20px] w-[20px] left-[20px]  fill-color-1" />
+        <p className="relative top-[30px] right-[3px] font-balsamiq text-sm">{imageDetail.likes}</p>
+        <FaRegComment className="relative h-[20px] w-[20px] left-[20px]" />
+        <p className="relative top-[30px] font-balsamiq text-sm">{imageDetail.commentsCount}</p>
+        <FiSend className="relative h-[20px] w-[20px] left-[20px] " />
+        <p className="relative top-[30px] font-balsamiq text-sm">2K</p>
       </div>
 
       <div className="relative p-4 bottom-[30px]">
