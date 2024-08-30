@@ -5,9 +5,7 @@ import AppContextProvider from './context/AppContext';
 import '../src/index.css'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
     <AppContextProvider>
     <AppRouter />
     </AppContextProvider>
-  </StrictMode>,
 )
