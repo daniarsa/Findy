@@ -3,19 +3,21 @@ import { getProfile } from "../../services/findyServices";
 import { RiArrowLeftWideLine } from "react-icons/ri";
 import { HiEllipsisHorizontal } from "react-icons/hi2";
 import EditProfileModal from "../../components/Edit/Edit"
+import { useProfile } from "../../context/AppContext";
 
 const Profile = () => {
-  const [profileData, setProfileData] = useState(null);
+  // const [profileData, setProfileData] = useState(null);
+  const {profileData, profileDispatch} = useProfile(); //Access to status and dispatch from context
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("Photos");
 
   useEffect(() => {
     const fetchProfileData = async () => {
       const data = await getProfile();
-      setProfileData(data);
+      profileDispatch({ type: 'UPDATE_PROFILE', payload: data }); // Use profileDispatch to update the global state
     };
     fetchProfileData();
-  }, []);
+  }, [profileDispatch]);
 
   if (!profileData) {
     return <p>Loading...</p>;
@@ -31,33 +33,24 @@ const Profile = () => {
     setIsModalOpen(false);
   };
 
-  const updateProfileData = (updatedData) => {
-    setProfileData(updatedData);
-  };
-
-  // Función para actualizar los datos del perfil
-  const updateProfile = async (updatedProfileData) => {
-    try {
-      updateProfileData(updatedProfileData);
-    } catch (error) {
-      console.error("Error updating profile:", error);
-    }
-  };
-
-
+  
    // Función para renderizar el contenido basado en la sección activa
    const renderContent = () => {
     if (activeSection === "Photos") {
+      if (!profileData.photos || profileData.photos.length === 0) {
+        return <div>No photos available</div>;
+      }
+      
       return (
         <div className="grid grid-cols-2 gap-2 p-4">
           {profileData.photos.map((photoObj, index) => {
             const photoUrl = Object.values(photoObj)[0];
             let customClasses = "";
             let imgClasses = "w-full h-full object-cover";
-
+  
             switch(index) {
               case 0:
-                customClasses = "w-[190px] h-[190px] ";
+                customClasses = "w-[190px] h-[190px]";
                 break;
               case 1:
                 customClasses = "w-[190px] h-[213px]";
@@ -77,11 +70,11 @@ const Profile = () => {
               default:
                 customClasses = "";
             }
-
+  
             if (index === 1 || index === 3 || index === 4) {
               imgClasses += " object-[top]";
             }
-
+  
             return (
               <div key={index} className={`overflow-hidden rounded-3xl ${customClasses}`}>
                 <img
@@ -98,6 +91,7 @@ const Profile = () => {
       return <div className="text-center p-4">No content to display</div>;
     }
   };
+  
 
 
 
@@ -188,8 +182,6 @@ const Profile = () => {
       {/* Modal para editar perfil */}
       <EditProfileModal
         isOpen={isModalOpen}
-        initialProfileData={profileData}
-        onUpdateProfile={updateProfile}
         onClose={closeModal}
       />
     </main>
