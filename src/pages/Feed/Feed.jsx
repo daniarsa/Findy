@@ -6,6 +6,7 @@ import { FaRegComments } from "react-icons/fa6";
 import { TbLocationShare } from "react-icons/tb";
 import { FaBookmark } from "react-icons/fa6";
 import { MdOutlineAdd } from "react-icons/md";
+import NavigationBar from "../../components/NavigationBar/NavigationBar";
 
 const Feed = () => {
   const [feedData, setFeedData] = useState(null);
@@ -99,6 +100,7 @@ const Feed = () => {
           <p>No posts available</p>
         )}
       </section>
+      <NavigationBar />
     </main>
   );
 };
