@@ -3,21 +3,21 @@ import { getProfile } from "../../services/findyServices";
 import { RiArrowLeftWideLine } from "react-icons/ri";
 import { HiEllipsisHorizontal } from "react-icons/hi2";
 import EditProfileModal from "../../components/Edit/Edit"
-import { useProfile } from "../../context/ProfileContext";
+import { useProfile } from "../../context/AppContext";
 
 const Profile = () => {
   // const [profileData, setProfileData] = useState(null);
-  const {profileData, dispatch} = useProfile(); //Access to status and dispatch from context
+  const {profileData, profileDispatch} = useProfile(); //Access to status and dispatch from context
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("Photos");
 
   useEffect(() => {
     const fetchProfileData = async () => {
       const data = await getProfile();
-      dispatch({ type: 'UPDATE_PROFILE', payload: data})//use dispatch for update the global state
+      profileDispatch({ type: 'UPDATE_PROFILE', payload: data }); // Use profileDispatch to update the global state
     };
     fetchProfileData();
-  }, [dispatch]);
+  }, [profileDispatch]);
 
   if (!profileData) {
     return <p>Loading...</p>;

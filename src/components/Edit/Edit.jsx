@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useProfile } from "../../context/ProfileContext"; // Importar el hook personalizado
+import { useProfile } from "../../context/AppContext"; // Importar el hook personalizado
 
 const ProfileSchema = Yup.object().shape({
   name: Yup.string().required('El nombre es requerido'),
