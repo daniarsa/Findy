@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
 import PropTypes from "prop-types";
 import userReducer from "../reducers/userReducer";
+import postsReducer from "../reducers/postsReducer";
 
 // Crear el contexto
 export const AppContext = createContext(null);
