@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
 import PropTypes from "prop-types";
 import userReducer from "../reducers/userReducer";
+import postsReducer from "../reducers/postsReducer";
 import likesReducer from "../reducers/likesReducer";
 
 // Crear el contexto
@@ -27,6 +28,10 @@ export const AppContextProvider = ({ children, initialProfileData }) => {
   });
 
   const [profileData, profileDispatch] = useReducer(profileReducer, initialProfileData);
+
+  const [posts, postsDispatch] = useReducer(postsReducer, {
+    posts: [],
+  });
   const [likes, likesDispatch] = useReducer(likesReducer, {});
 
   const globalState = {
@@ -34,6 +39,8 @@ export const AppContextProvider = ({ children, initialProfileData }) => {
     userDispatch,
     profileData,
     profileDispatch,
+    posts,
+    postsDispatch,
     likes,
     likesDispatch,
   };
