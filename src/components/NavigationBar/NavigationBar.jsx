@@ -6,7 +6,7 @@ import perfil from "../../assets/perfil.png"
 
 const NavigationBar = () => {
   return (
-    <nav className="w-full" >
+    <nav className="w-full fixed-bottom max-w-md mx-auto shadow-lg rounded-b-lg overflow-hidden" >
       <ul className="flex flex-row gap-4 bg-color-1 justify-around py-3 text-color-5 ">
         <li><a href="#"><TiHome className="h-6 w-6 " /></a></li>
         <li><a href="#"><IoIosSearch className="h-6 w-6 " /></a></li>

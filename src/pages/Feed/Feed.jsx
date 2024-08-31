@@ -6,7 +6,6 @@ import { FaRegComments } from "react-icons/fa6";
 import { TbLocationShare } from "react-icons/tb";
 import { FaBookmark } from "react-icons/fa6";
 import { MdOutlineAdd } from "react-icons/md";
-import NavigationBar from "../../components/NavigationBar/NavigationBar";
 
 const Feed = () => {
   const [feedData, setFeedData] = useState(null);
@@ -28,7 +27,7 @@ const Feed = () => {
   const story2 = feedData.stories.find((story) => story.id === "4");
 
   return (
-    <main className="bg-custom-gradient bg-cover bg-center bg-no-repeat max-w-md mx-auto shadow-lg rounded-lg overflow-hidden w-full flex flex-col items-center">
+    <main className="bg-custom-gradient bg-cover bg-center bg-no-repeat max-w-md mx-auto shadow-t-lg rounded-lg overflow-hidden w-full flex flex-col items-center">
       <section className="flex flex-row items-center justify-between py-2 px-4 w-full">
         <img src={Logotipo} alt="Findy" />
         <div className="flex flex-row items-center gap-3 text-font-color-1">
@@ -100,7 +99,6 @@ const Feed = () => {
           <p>No posts available</p>
         )}
       </section>
-      <NavigationBar />
     </main>
   );
 };
