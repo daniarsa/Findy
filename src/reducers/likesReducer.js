@@ -1,14 +1,15 @@
 const likesReducer = (state, action) => {
-    switch (action.type) {
-      case "TOGGLE_LIKE":
-        const postId = action.payload;
-        return {
-          ...state,
-          [postId]: !state[postId],
-        };
-      default:
-        return state;
+  switch (action.type) {
+    case "TOGGLE_LIKE": {
+      const { postId } = action.payload;
+      return {
+        ...state,
+        [postId]: !state[postId],  // Alterna el estado del like para el postId
+      };
     }
-  };
-  
-  export default likesReducer;
+    default:
+      return state;
+  }
+};
+
+export default likesReducer;

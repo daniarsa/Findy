@@ -67,4 +67,9 @@ export const useAppContext = () => {
   return useContext(AppContext);
 };
 
+export const useLikes = () => {
+  const { likes, likesDispatch } = useContext(AppContext);
+  return { likes, likesDispatch };
+};
+
 export default AppContextProvider;

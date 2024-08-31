@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getImageDetail, getProfile, getFeed } from "../../services/findyServices";
 import { IoIosArrowBack, IoIosMore, IoMdSend } from "react-icons/io";
-import { FaRegComment, FaHeart } from "react-icons/fa";
+import { FaRegComment} from "react-icons/fa";
+// import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
+import LikeButton from "../../components/LikeButton/LikeButton";  
 
 
 const Details = () => {
@@ -35,12 +37,12 @@ const Details = () => {
   }
 
   return (
-    <div className="details-page bg-custom-gradient bg-cover bg-center bg-no-repeat max-w-md mx-auto shadow-lg rounded-lg overflow-hidden w-full">
+    <div className="details-page bg-custom-gradient bg-cover bg-center bg-no-repeat max-w-md mx-auto shadow-lg rounded-lg rounded-tr-3xl overflow-hidden w-full min-w-[300px] min-h-[300px]">
       <div className="relative ">
         <img
           src={imageDetail.imageUrl}
           alt="detail"
-          className="relative top-[10px] object-cover w-full h-full rounded-3xl"
+          className="relative object-cover w-[480px] h-[690px] aspect-video  rounded-3xl"
         />
         
         <div className="absolute inset-x-0 top-0 flex justify-between items-center p-8">
@@ -61,7 +63,9 @@ const Details = () => {
         <p className="relative top-[15px] right-[34px] font-balsamiq text-font-color-2 font-semibold text-sm">
           {profileData.name}
         </p>
-        <FaHeart className="flex relative h-[20px] w-[20px] left-[20px]  fill-color-1" />
+        <LikeButton buttonClass="feed-like-button relative h-[20px] w-[20px] left-[20px] fill-color-1 " 
+        iconClass="feed-like-icon relative h-[20px] w-[20px] ">
+        </LikeButton>
         <p className="relative top-[30px] right-[3px] font-balsamiq text-sm">{imageDetail.likes}</p>
         <FaRegComment className="relative h-[20px] w-[20px] left-[20px]" />
         <p className="relative top-[30px] font-balsamiq text-sm">{imageDetail.commentsCount}</p>
