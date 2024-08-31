@@ -1,6 +1,7 @@
 import { createContext, useContext, useReducer } from "react";
 import PropTypes from "prop-types";
 import userReducer from "../reducers/userReducer";
+import likesReducer from "../reducers/likesReducer";
 
 // Crear el contexto
 export const AppContext = createContext(null);
@@ -26,12 +27,15 @@ export const AppContextProvider = ({ children, initialProfileData }) => {
   });
 
   const [profileData, profileDispatch] = useReducer(profileReducer, initialProfileData);
+  const [likes, likesDispatch] = useReducer(likesReducer, {});
 
   const globalState = {
     user,
     userDispatch,
     profileData,
     profileDispatch,
+    likes,
+    likesDispatch,
   };
 
   return (
