@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { getFeed } from "../../services/findyServices";
+import { useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 import Logotipo from "../../assets/LOGOLOGO 3.svg";
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { FaRegComments } from "react-icons/fa6";
@@ -8,23 +8,16 @@ import { FaBookmark } from "react-icons/fa6";
 import { MdOutlineAdd } from "react-icons/md";
 
 const Feed = () => {
-  const [feedData, setFeedData] = useState(null);
+  const { posts, postsDispatch } = useContext(AppContext);
 
-  useEffect(() => {
-    const fetchFeedData = async () => {
-      const data = await getFeed();
-      setFeedData(data);
-    };
-    fetchFeedData();
-  }, []);
 
-  if (!feedData) {
+
+  if (!posts.posts || posts.posts.length === 0) {
     return <p>Loading...</p>;
   }
 
-  // Encontrar las historias con id 2 y 4
-  const story1 = feedData.stories.find((story) => story.id === "2");
-  const story2 = feedData.stories.find((story) => story.id === "4");
+  const story1 = posts.stories?.find((story) => story.id === "2");
+  const story2 = posts.stories?.find((story) => story.id === "4");
 
   return (
     <main className="bg-custom-gradient bg-cover bg-center bg-no-repeat max-w-md mx-auto shadow-t-lg rounded-lg overflow-hidden w-full flex flex-col items-center">
@@ -36,10 +29,9 @@ const Feed = () => {
         </div>
       </section>
       <div className="flex flex-row items-center py-2 pl-4 gap-5 ">
-        {feedData.stories && feedData.stories.length > 0 ? (
-          feedData.stories.map((story, index) => (
+        {posts.stories && posts.stories.length > 0 ? (
+          posts.stories.map((story, index) => (
             <div key={index} className="story flex flex-col justify-items-center">
-              {/* Mostrar el ícono MdOutlineAdd solo para el primer story con title "Your Story" */}
               {story.title === "Your Story" && index === 0 && (
                 <div className="absolute top-[103px] left-[485px] ">
                   <MdOutlineAdd className="text-color-1 w-7 h-7 font-bold" />
@@ -54,9 +46,9 @@ const Feed = () => {
         )}
       </div>
       <section className="w-11/12 flex flex-col gap-2">
-        {feedData.posts && feedData.posts.length > 0 ? (
-          feedData.posts.map((post, index) => (
-            <article key={index} className="bg-color-5 rounded-lg" >
+        {posts.posts && posts.posts.length > 0 ? (
+          posts.posts.map((post, index) => (
+            <article key={index} className="bg-color-5 rounded-lg">
               <div className="users">
                 {index === 0 && story1 && (
                   <div className="user-story flex flex-row items-center px-4 py-2 gap-2">

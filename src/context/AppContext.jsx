@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useReducer, useEffect } from "react";
 import PropTypes from "prop-types";
 import userReducer from "../reducers/userReducer";
 import postsReducer from "../reducers/postsReducer";
@@ -28,10 +28,8 @@ export const AppContextProvider = ({ children, initialProfileData }) => {
 
   const [profileData, profileDispatch] = useReducer(profileReducer, initialProfileData);
 
-  const [posts, postsDispatch] = useReducer(postsReducer, {
-    posts: [],
-  });
-
+  const [posts, postsDispatch] = useReducer(postsReducer, { posts: [] });
+  
   const globalState = {
     user,
     userDispatch,
