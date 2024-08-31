@@ -27,11 +27,17 @@ export const AppContextProvider = ({ children, initialProfileData }) => {
 
   const [profileData, profileDispatch] = useReducer(profileReducer, initialProfileData);
 
+  const [posts, postsDispatch] = useReducer(postsReducer, {
+    posts: [],
+  });
+
   const globalState = {
     user,
     userDispatch,
     profileData,
     profileDispatch,
+    posts,
+    postsDispatch,
   };
 
   return (
