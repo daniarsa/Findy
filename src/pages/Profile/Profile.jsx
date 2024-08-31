@@ -4,12 +4,14 @@ import { RiArrowLeftWideLine } from "react-icons/ri";
 import { HiEllipsisHorizontal } from "react-icons/hi2";
 import EditProfileModal from "../../components/Edit/Edit"
 import { useProfile } from "../../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   // const [profileData, setProfileData] = useState(null);
   const {profileData, profileDispatch} = useProfile(); //Access to status and dispatch from context
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("Photos");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfileData = async () => {
@@ -33,6 +35,10 @@ const Profile = () => {
     setIsModalOpen(false);
   };
 
+  const handlePhotoClick = (id) => {
+    navigate(`/details/${id}`);
+  };
+
   
    // Función para renderizar el contenido basado en la sección activa
    const renderContent = () => {
@@ -40,14 +46,16 @@ const Profile = () => {
       if (!profileData.photos || profileData.photos.length === 0) {
         return <div>No photos available</div>;
       }
-      
+
       return (
         <div className="grid grid-cols-2 gap-2 p-4">
           {profileData.photos.map((photoObj, index) => {
-            const photoUrl = Object.values(photoObj)[0];
+            // const { id, imageUrl } = photoObj;
+            const photoId = photoObj.id;
+            const photoUrl = photoObj.imageUrl;
             let customClasses = "";
             let imgClasses = "w-full h-full object-cover";
-  
+
             switch(index) {
               case 0:
                 customClasses = "w-[190px] h-[190px]";
@@ -70,17 +78,18 @@ const Profile = () => {
               default:
                 customClasses = "";
             }
-  
+
             if (index === 1 || index === 3 || index === 4) {
               imgClasses += " object-[top]";
             }
-  
+
             return (
-              <div key={index} className={`overflow-hidden rounded-3xl ${customClasses}`}>
+              <div key={photoId} className={`overflow-hidden rounded-3xl cursor-pointer ${customClasses}`}>
                 <img
                   className={imgClasses}
                   src={photoUrl}
                   alt={`Photo ${index + 1}`}
+                  onClick={() => handlePhotoClick(photoId)}
                 />
               </div>
             );
@@ -91,6 +100,7 @@ const Profile = () => {
       return <div className="text-center p-4">No content to display</div>;
     }
   };
+  
   
 
 
@@ -105,7 +115,7 @@ const Profile = () => {
           alt="Profile Background" 
         />
 
-        <RiArrowLeftWideLine className="absolute top-6 left-6 text-2xl" style={{ strokeWidth: 0.5 }} />
+        <RiArrowLeftWideLine className="absolute top-6 left-6 text-2xl cursor-pointer" style={{ strokeWidth: 0.5 }} onClick={() => navigate("/")} />
         <HiEllipsisHorizontal 
           className="absolute top-6 right-7 text-2xl cursor-pointer" 
           style={{ strokeWidth: 0.5 }} 

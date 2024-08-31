@@ -21,12 +21,37 @@ export const getProfile = async () => {
     }
 }
 
-export const getImageDetail = async () => {
+// export const getImageDetail = async () => {
+//     try {
+//         const response = await axios.get(`${endpoints.imageDetail}`);
+//         return response.data;
+//     } catch (error) {
+//         console.error(error);
+//         return null;
+//     }
+// };
+
+// services/findyServices.js
+export const getImageDetail = async (id) => {
     try {
-        const response = await axios.get(`${endpoints.imageDetail}`);
-        return response.data;
+        const response = await axios.get(`${endpoints.profile}`);
+        const profile = response.data.profile;
+        console.log('Profile data:', profile); // Agrega esta línea para verificar los datos recibidos
+        if (profile && profile.photos) {
+            const imageDetail = profile.photos.find(photo => photo.id === id);
+            if (imageDetail) {
+                return imageDetail;
+            } else {
+                console.error('Image not found');
+                return null;
+            }
+        } else {
+            console.error('Profile or photos data is missing');
+            return null;
+        }
     } catch (error) {
-        console.error(error);
+        console.error('Error fetching image details:', error);
         return null;
     }
 };
+  
