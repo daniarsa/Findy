@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getImageDetail, getProfile, getFeed } from "../../services/findyServices";
 import { IoIosArrowBack, IoIosMore, IoMdSend } from "react-icons/io";
 import { FaRegComment, FaHeart } from "react-icons/fa";
@@ -11,21 +11,24 @@ const Details = () => {
   const [profileData, setProfileData] = useState(null);
   const [feedData, setFeedData] = useState(null);
   const navigate = useNavigate();
+  const { id } = useParams(); // Obtén el ID de la URL
 
   useEffect(() => {
     const fetchData = async () => {
-      const imageData = await getImageDetail();
-      setImageDetail(imageData);
-
       const profileInfo = await getProfile();
       setProfileData(profileInfo);
 
       const feedInfo = await getFeed();
       setFeedData(feedInfo);
+
+      // Encuentra la imagen correspondiente en profileData.photos
+      const imageDetail = profileInfo.photos.find(photo => photo.id === id);
+      console.log('imageDetail:', imageDetail);
+      setImageDetail(imageDetail);
     };
 
     fetchData();
-  }, []);
+  }, [id]);
 
   if (!imageDetail || !profileData || !feedData) {
     return <p>Loading...</p>;
