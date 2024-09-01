@@ -10,7 +10,7 @@ import CommentModal from "../../components/CommentModal/CommentModal";
 const Details = () => {
   const [imageDetail, setImageDetail] = useState(null);
   const [profileData, setProfileData] = useState(null);
-  const [storyImage, setStoryImage] = useState(null);  // Estado para la imagen del story
+  const [storyImage, setStoryImage] = useState(null);  
   const [newComment, setNewComment] = useState(""); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -24,10 +24,10 @@ const Details = () => {
       const imageDetail = profileInfo.photos.find(photo => photo.id === id);
       setImageDetail(imageDetail);
 
-      // Obtener las historias usando la función getStories
+      
       const stories = await getStories();
       if (stories) {
-        // Encuentra la historia con id "1" y toma su image2
+        
         const storyImage = stories.find(story => story.id === "1")?.image2; 
         setStoryImage(storyImage);
       }
@@ -101,7 +101,7 @@ const Details = () => {
 
       <div className="relative p-4 flex items-center space-x-2">
         <img
-          src={storyImage}  // Usar la imagen de la historia aquí
+          src={storyImage} 
           alt="Story"
           className="h-10 w-10 rounded-full object-cover border-2 p-[2.5px] bg-gradient-to-r from-color-1 via-color-2 to-color-4"
         />
