@@ -65,3 +65,29 @@ export const getImageDetail = async (id) => {
     }
 };
   
+
+export const updateProfilePhotoComments = async (id, updatedComments) => {
+    try {
+      // Primero, obtienes el perfil completo
+      const response = await axios.get(endpoints.profile);
+      const profile = response.data;
+  
+      // Encuentras la foto correspondiente y actualizas los comentarios
+      const photoIndex = profile.photos.findIndex(photo => photo.id === id);
+      if (photoIndex === -1) {
+        console.error('Photo not found');
+        return null;
+      }
+      
+      profile.photos[photoIndex].comments = updatedComments;
+  
+      // Ahora, haces un PUT para actualizar todo el perfil (incluyendo la foto con los nuevos comentarios)
+      const updateResponse = await axios.put(endpoints.profile, profile);
+      console.log('Update response:', updateResponse.data);
+      return updateResponse.data;
+    } catch (error) {
+      console.error('Error updating comments:', error);
+      return null;
+    }
+  };
+  

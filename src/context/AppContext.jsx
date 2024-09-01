@@ -5,6 +5,7 @@ import postsReducer from "../reducers/postsReducer";
 import storiesReducer from "../reducers/storiesReducer";
 import { getPosts } from "../services/findyServices";
 import { getStories } from "../services/findyServices";
+import likesReducer from "../reducers/likesReducer";
 
 // Crear el contexto
 export const AppContext = createContext(null);
@@ -49,6 +50,7 @@ export const AppContextProvider = ({ children, initialProfileData }) => {
   const [posts, postsDispatch] = useReducer(postsReducer, {
     posts: [],
   });
+  const [likes, likesDispatch] = useReducer(likesReducer, {});
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -69,6 +71,8 @@ export const AppContextProvider = ({ children, initialProfileData }) => {
     postsDispatch,
     stories,
     storiesDispatch,
+    likes,
+    likesDispatch,
   };
 
   return (
@@ -91,6 +95,11 @@ export const useProfile = () => {
 
 export const useAppContext = () => {
   return useContext(AppContext);
+};
+
+export const useLikes = () => {
+  const { likes, likesDispatch } = useContext(AppContext);
+  return { likes, likesDispatch };
 };
 
 export default AppContextProvider;
