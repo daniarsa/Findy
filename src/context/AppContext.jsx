@@ -2,6 +2,9 @@ import { createContext, useContext, useReducer, useEffect } from "react";
 import PropTypes from "prop-types";
 import userReducer from "../reducers/userReducer";
 import postsReducer from "../reducers/postsReducer";
+import storiesReducer from "../reducers/storiesReducer";
+import { getPosts } from "../services/findyServices";
+import { getStories } from "../services/findyServices";
 
 // Crear el contexto
 export const AppContext = createContext(null);
@@ -28,8 +31,35 @@ export const AppContextProvider = ({ children, initialProfileData }) => {
 
   const [profileData, profileDispatch] = useReducer(profileReducer, initialProfileData);
 
-  const [posts, postsDispatch] = useReducer(postsReducer, { posts: [] });
+  const [stories, storiesDispatch] = useReducer(storiesReducer, {
+    stories: [],
+  });
+
+  useEffect(() => {
+    const fetchStories = async () => {
+        const storiesData = await getStories();
+        storiesDispatch({ type: 'UPDATE_STORIES', payload: storiesData });
+    };
+
+    fetchStories();
+}, []);
+
+
+ 
+  const [posts, postsDispatch] = useReducer(postsReducer, {
+    posts: [],
+  });
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const postsData = await getPosts();
+      postsDispatch({ type: 'UPDATE_POSTS', payload: postsData });
+    };
   
+    fetchPosts();
+  }, []);
+  
+
   const globalState = {
     user,
     userDispatch,
@@ -37,6 +67,8 @@ export const AppContextProvider = ({ children, initialProfileData }) => {
     profileDispatch,
     posts,
     postsDispatch,
+    stories,
+    storiesDispatch,
   };
 
   return (

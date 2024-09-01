@@ -11,6 +11,26 @@ export const getFeed = async () => {
     }
 };
 
+export const getStories = async () => {
+    try {
+        const response = await axios.get(endpoints.stories);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
+export const getPosts = async () => {
+    try {
+        const response = await axios.get(endpoints.posts);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+};
+
 export const getProfile = async () => {
     try {
         const response = await axios.get(endpoints.profile);

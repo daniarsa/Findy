@@ -8,16 +8,14 @@ import { FaBookmark } from "react-icons/fa6";
 import { MdOutlineAdd } from "react-icons/md";
 
 const Feed = () => {
-  const { posts, postsDispatch } = useContext(AppContext);
-
-
+  const { posts, stories } = useContext(AppContext);
 
   if (!posts.posts || posts.posts.length === 0) {
     return <p>Loading...</p>;
   }
 
-  const story1 = posts.stories?.find((story) => story.id === "2");
-  const story2 = posts.stories?.find((story) => story.id === "4");
+  const story1 = stories.stories.find((story) => story.id === "2");
+  const story2 = stories.stories.find((story) => story.id === "4");
 
   return (
     <main className="bg-custom-gradient bg-cover bg-center bg-no-repeat max-w-md mx-auto shadow-t-lg rounded-lg overflow-hidden w-full flex flex-col items-center">
@@ -29,8 +27,8 @@ const Feed = () => {
         </div>
       </section>
       <div className="flex flex-row items-center py-2 pl-4 gap-5 ">
-        {posts.stories && posts.stories.length > 0 ? (
-          posts.stories.map((story, index) => (
+        {stories.stories && stories.stories.length > 0 ? (
+          stories.stories.map((story, index) => (
             <div key={index} className="story flex flex-col justify-items-center">
               {story.title === "Your Story" && index === 0 && (
                 <div className="absolute top-[103px] left-[485px] ">
