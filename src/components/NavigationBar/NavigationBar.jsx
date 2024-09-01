@@ -6,12 +6,12 @@ import perfil from "../../assets/perfil.png";
 
 const NavigationBar = () => {
   return (
-    <nav className="w-full fixed-bottom max-w-md mx-auto shadow-lg overflow-hidden bg-color-1">
+    <nav className="w-full fixed-bottom max-w-md mx-auto shadow-lg  bg-color-1">
       <ul className="flex flex-row justify-around items-center py-3 relative">
         {/* Botón central flotante */}
-        <div className="absolute top-[-30px] left-1/2 transform -translate-x-1/2">
-          <button className="bg-color-3 text-color-5 p-3 rounded-full shadow-md">
-            <MdOutlineAdd className="h-6 w-6" />
+        <div className="absolute top-[-25px] left-1/2 transform -translate-x-1/2">
+          <button className="bg-color-4 text-color-5 p-3 rounded-full shadow-md">
+            <MdOutlineAdd className="h-10 w-10" />
           </button>
         </div>
 
