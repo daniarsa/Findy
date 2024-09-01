@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getProfile, updateProfilePhotoComments } from "../../services/findyServices";
+import { getProfile, updateProfilePhotoComments, getStories } from "../../services/findyServices";
 import { IoIosArrowBack, IoIosMore, IoMdSend } from "react-icons/io";
 import { FaRegComment } from "react-icons/fa";
 import { FiSend } from "react-icons/fi";
 import LikeButton from "../../components/LikeButton/LikeButton";
-import CommentModal from "../../components/CommentModal/CommentModal"; 
+import CommentModal from "../../components/CommentModal/CommentModal";
 
 const Details = () => {
   const [imageDetail, setImageDetail] = useState(null);
   const [profileData, setProfileData] = useState(null);
+  const [storyImage, setStoryImage] = useState(null);  // Estado para la imagen del story
   const [newComment, setNewComment] = useState(""); 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -21,8 +22,15 @@ const Details = () => {
       setProfileData(profileInfo);
 
       const imageDetail = profileInfo.photos.find(photo => photo.id === id);
-      console.log('imageDetail:', imageDetail);
       setImageDetail(imageDetail);
+
+      // Obtener las historias usando la función getStories
+      const stories = await getStories();
+      if (stories) {
+        // Encuentra la historia con id "1" y toma su image2
+        const storyImage = stories.find(story => story.id === "1")?.image2; 
+        setStoryImage(storyImage);
+      }
     };
 
     fetchData();
@@ -93,8 +101,8 @@ const Details = () => {
 
       <div className="relative p-4 flex items-center space-x-2">
         <img
-          src={profileData.profileImageUrl}
-          alt="Profile"
+          src={storyImage}  // Usar la imagen de la historia aquí
+          alt="Story"
           className="h-10 w-10 rounded-full object-cover border-2 p-[2.5px] bg-gradient-to-r from-color-1 via-color-2 to-color-4"
         />
         <input
