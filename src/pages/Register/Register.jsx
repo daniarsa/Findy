@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import Swal from "sweetalert2";
 import { createUser } from "../../services/userServices";
 
 const passwordRegex =
@@ -85,10 +86,48 @@ const Register = () => {
               const newUser = await createUser(values);
               console.table(newUser);
               if (newUser) {
-                alert("Su cuenta ha sido creada exitosamente");
+                Swal.fire({
+                  title: "Your account has been created successfully",
+                  icon: "success",
+                  confirmButtonText: "Accept",
+                  confirmButtonColor: "#FF7674",
+                  color: "#2F2F2F",
+                  width: "80%",
+                  background:
+                    "url(src/assets/Group 28.jpg) no-repeat center center",
+                  customClass: {
+                    popup: "rounded-lg p-6",
+                    title: "font-balsamiq text-xl",
+                    content: "text-base",
+                  },
+                  backdrop: `
+                    rgba(0,0,0,0.4)
+                      left top
+                      no-repeat
+                                  `,
+                });
                 navigate("/login");
               } else {
-                alert("Ha ocurrido un error en la creación de su cuenta");
+                Swal.fire({
+                  title: "An error occurred while creating your account",
+                  icon: "error",
+                  confirmButtonText: "Accept",
+                  confirmButtonColor: "#FF7674",
+                  color: "#2F2F2F",
+                  width: "30%",
+                  background:
+                    "url(src/assets/Group 28.jpg) no-repeat center center",
+                  customClass: {
+                    popup: "rounded-lg p-6",
+                    title: "font-balsamiq text-xl",
+                    content: "text-base",
+                  },
+                  backdrop: `
+                    rgba(0,0,0,0.4)
+                      left top
+                      no-repeat
+                                  `,
+                });
               }
             } catch (error) {
               console.error("Error en el envío del formulario:", error);

@@ -3,6 +3,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Swal from "sweetalert2";
 import { login } from "../../services/userServices";
 import useAppContext from "../../hooks/useAppContext";
 
@@ -32,13 +33,51 @@ const Login = () => {
           payload: loggedUser,
         });
 
-        alert(`${loggedUser.name}, te damos la bienvenida`);
+        Swal.fire({
+          title: "¡Hello!",
+          text: `${loggedUser.name}, Welcome back.`,
+          icon: "success",
+          confirmButtonText: "Accept",
+          confirmButtonColor: "#FF7674",
+          color: "#2F2F2F",
+          width: "80%",
+          background:
+            "url(src/assets/Group 28.jpg) no-repeat center center",
+          customClass: {
+            popup: "rounded-lg p-6",
+            title: "font-balsamiq text-xl",
+            content: "text-base",
+          },
+          backdrop: `
+            rgba(0,0,0,0.4)
+            left top
+           no-repeat
+                    `,
+        });
 
         navigate("/Details");
       } else {
-        alert(
-          "Ha ocurrido un error en el inicio de sesión, por favor verifique sus credenciales"
-        );
+        Swal.fire({
+          title: "Error",
+          text: "Ha ocurrido un error en el inicio de sesión, por favor verifique sus datos.",
+          icon: "error",
+          confirmButtonText: "Accept",
+          confirmButtonColor: "#FF7674",
+          color: "#2F2F2F",
+          width: "80%",
+          background:
+            "url(src/assets/Group 28.jpg) no-repeat center center",
+          customClass: {
+            popup: "rounded-lg p-6",
+            title: "font-balsamiq text-xl",
+            content: "text-base",
+          },
+          backdrop: `
+            rgba(0,0,0,0.4)
+            left top
+           no-repeat
+                    `,
+        });
       }
     },
   });
