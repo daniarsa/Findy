@@ -4,3 +4,25 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* .custom-gradient {
+    background-image: url(../src/assets/Group\ 28.jpg);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    background-repeat: no-repeat;
+} */
+
+.custom-border-gradient {
+    border-width: 4px; /* Mantén el grosor del borde que ya tienes */
+    border-radius: 50%; /* Asegura que el borde sea circular */
+    border-style: solid;
+    border-image-slice: 1;
+    border-image-source: linear-gradient(
+      to right,
+      #FF7674,
+      #FF74B7,
+      #FF74FC,
+      #FFBC74
+    );
+}
