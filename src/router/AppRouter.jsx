@@ -20,7 +20,7 @@ const AppRouter = () => {
                 </Route>
                 <Route path="/" element={<Layout />}>
                     <Route path="*" element={<NoMatch />} />
-                    <Route element={<PrivateRoutes isAuthenticated={true} />}>
+                    <Route element={<PrivateRoutes isAuthenticated={false} />}>
                         <Route index element={<Feed />} />
                         <Route path="details/:id" element={<Details />} />
                         <Route path="Profile" element={<Profile />} />
