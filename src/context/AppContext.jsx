@@ -48,6 +48,8 @@ export const AppContextProvider = ({ children, initialProfileData }) => {
  
   const [posts, postsDispatch] = useReducer(postsReducer, {
     posts: [],
+    loading: false,
+    error: null,
   });
 
   useEffect(() => {

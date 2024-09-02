@@ -31,7 +31,7 @@ const Feed = () => {
           stories.stories.map((story, index) => (
             <div key={index} className="story flex flex-col justify-items-center">
               {story.title === "Your Story" && index === 0 && (
-                <div className="absolute top-[103px] left-[485px] ">
+                <div className="absolute top-[80px] pl-4">
                   <MdOutlineAdd className="text-color-1 w-7 h-7 font-bold" />
                 </div>
               )}

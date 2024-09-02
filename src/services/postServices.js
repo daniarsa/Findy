@@ -6,7 +6,7 @@ export const getPosts = async () => {
     return data;
 };
 
-export const createPost = async (postData) => {
-    const { data } = await axios.post(endpoints.posts, postData);
+export const createPost = async (posts) => {
+    const { data } = await axios.post(endpoints.posts, posts);
     return data;
 };
