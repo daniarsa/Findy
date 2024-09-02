@@ -69,7 +69,7 @@ const Feed = () => {
             <article key={index} className="bg-color-5 rounded-lg">
               <div className="users">
                 {index === 0 && story1 && (
-                  <div className="user-story flex flex-row items-center px-4 py-2 gap-2">
+                  <div className="user-story flex flex-row items-center px-4 pb-0 py-2 gap-2">
                     <img
                       src={story1.image2}
                       alt={story1.title}
@@ -79,7 +79,7 @@ const Feed = () => {
                   </div>
                 )}
                 {index === 1 && story2 && (
-                  <div className="user-story flex flex-row items-center px-4 py-2 gap-2">
+                  <div className="user-story flex flex-row items-center px-4 pb-0 py-2 gap-2">
                     <img
                       src={story2.image2}
                       alt={story2.title}
@@ -89,7 +89,7 @@ const Feed = () => {
                   </div>
                 )}
               </div>
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center items-center pt-2">
                 <img src={post.image} alt="" className="rounded-lg w-96 h-96 object-cover" />
               </div>
               <div className="px-4 pt-4 pb-2">
