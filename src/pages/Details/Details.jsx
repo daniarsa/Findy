@@ -82,8 +82,8 @@ const Details = () => {
         <p className="relative top-[15px] right-[45px] font-balsamiq text-font-color-2 font-semibold text-sm">
           {profileData.name}
         </p>
-        <LikeButton buttonClass="feed-like-button relative h-[20px] w-[20px] left-[20px] fill-color-1 " 
-        iconClass="feed-like-icon relative h-[20px] w-[20px] ">
+        <LikeButton buttonClass="details-like-button relative h-[20px] w-[20px] left-[20px] fill-color-1 " 
+        iconClass="details-like-icon relative h-[20px] w-[20px] ">
         </LikeButton>
         <p className="relative top-[30px] right-[3px] font-balsamiq text-sm">{imageDetail.likes}</p>
         <FaRegComment 
