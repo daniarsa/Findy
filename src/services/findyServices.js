@@ -65,3 +65,36 @@ export const getImageDetail = async (id) => {
     }
 };
   
+
+export const updateProfilePhotoComments = async (id, updatedComments) => {
+    try {
+        
+        const response = await axios.get(endpoints.profile);
+        const profile = response.data;
+
+        
+        const photoIndex = profile.photos.findIndex(photo => photo.id === id);
+        if (photoIndex === -1) {
+            console.error('Photo not found');
+            return null;
+        }
+
+        
+        profile.photos[photoIndex].comments = updatedComments;
+
+        
+        const updateResponse = await axios.put(endpoints.profile, profile);
+        
+        
+        if (updateResponse.status === 200) {
+            console.log('Update successful:', updateResponse.data);
+            return updateResponse.data;
+        } else {
+            console.error('Failed to update profile:', updateResponse.status);
+            return null;
+        }
+    } catch (error) {
+        console.error('Error updating comments:', error);
+        return null;
+    }
+};
