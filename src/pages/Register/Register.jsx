@@ -82,9 +82,7 @@ const Register = () => {
           })}
           onSubmit={async (values) => {
             try {
-              console.table(values);
               const newUser = await createUser(values);
-              console.table(newUser);
               if (newUser) {
                 Swal.fire({
                   title: "Your account has been created successfully",

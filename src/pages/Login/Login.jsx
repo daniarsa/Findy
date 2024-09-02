@@ -22,10 +22,8 @@ const Login = () => {
       password: Yup.string().required("Este campo es requerido"),
     }),
     onSubmit: async (values) => {
-      console.table(values);
 
       const loggedUser = await login(values);
-      console.table(loggedUser);
 
       if (loggedUser) {
         userDispatch({
@@ -55,7 +53,7 @@ const Login = () => {
                     `,
         });
 
-        navigate("/");
+        navigate("/Feed");
       } else {
         Swal.fire({
           title: "Error",
