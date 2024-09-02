@@ -15,7 +15,7 @@ const NavigationBar = () => {
 
   return (
     <>
-      <nav className="w-full fixed-bottom max-w-md mx-auto shadow-lg  bg-color-1">
+      <nav className="w-full fixed-bottom max-w-md mx-auto shadow-lg  bg-color-1 fixed bottom-0 left-1/2 transform -translate-x-1/2">
         <ul className="flex flex-row justify-around items-center py-3 relative">
           {/* Botón central flotante */}
           <div className="absolute top-[-25px] left-1/2 transform -translate-x-1/2">

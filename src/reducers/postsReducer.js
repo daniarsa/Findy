@@ -10,6 +10,7 @@ const postsReducer = (state, action) => {
     case "FETCH_POSTS_FAILURE":
       return {
         ...state,
+        loading: false,
         error: action.payload,
       };
     case "UPDATE_POSTS":

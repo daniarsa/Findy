@@ -8,27 +8,27 @@ import NoMatch from "../pages/NoMatch/NoMatch"
 import Details from "../pages/Details/Details"
 import Feed from "../pages/Feed/Feed"
 import Profile from "../pages/Profile/Profile"
- 
- 
+
+
 const AppRouter = () => {
-  return (
-      <Router>
-          <Routes>
-              <Route path="/" element={<Layout />}>
-                  <Route path="*" element={<NoMatch /> } />
-                  <Route element={<PublicRoutes isAuthenticated={false} />}>
-                      <Route path="login" element={<Login />} />
-                      <Route path="register" element={<Register /> } />
-                  </Route>
-                  <Route element={<PrivateRoutes isAuthenticated={true} />}>
-                      <Route index element={<Feed />} />
-                      <Route path="details/:id" element={<Details /> } />
-                      <Route path="Profile" element={<Profile /> } />
-                  </Route>
-              </Route>
-          </Routes>
-    </Router>
-  )
+    return (
+        <Router>
+            <Routes>
+                <Route element={<PublicRoutes isAuthenticated={false} />}>
+                    <Route path="login" element={<Login />} />
+                    <Route path="register" element={<Register />} />
+                </Route>
+                <Route path="/" element={<Layout />}>
+                    <Route path="*" element={<NoMatch />} />
+                    <Route element={<PrivateRoutes isAuthenticated={true} />}>
+                        <Route index element={<Feed />} />
+                        <Route path="details/:id" element={<Details />} />
+                        <Route path="Profile" element={<Profile />} />
+                    </Route>
+                </Route>
+            </Routes>
+        </Router>
+    )
 }
- 
+
 export default AppRouter

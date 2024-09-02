@@ -1,14 +1,34 @@
-import { useContext } from "react";
-import { AppContext } from "../../context/AppContext";
+import { useEffect } from "react";
 import Logotipo from "../../assets/LOGOLOGO 3.svg";
 import { FaRegHeart, FaRegComment } from "react-icons/fa";
 import { FaRegComments } from "react-icons/fa6";
 import { TbLocationShare } from "react-icons/tb";
 import { FaBookmark } from "react-icons/fa6";
 import { MdOutlineAdd } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../../context/AppContext";
+import { getPosts } from "../../services/findyServices";
 
 const Feed = () => {
-  const { posts, stories } = useContext(AppContext);
+  const { posts, stories, postsDispatch } = useAppContext();
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      postsDispatch({ type: "FETCH_POSTS_REQUEST" });
+      try {
+        const data = await getPosts();
+        postsDispatch({ type: "UPDATE_POSTS", payload: data });
+      } catch (error) {
+        console.error(error);
+        postsDispatch({ type: "FETCH_POSTS_FAILURE", payload: error.message });
+      }
+    };
+    fetchPosts();
+  }, [postsDispatch]);
+
+  console.log('Posts in Feed:', posts);
+
+  const navigate = useNavigate();
 
   if (!posts.posts || posts.posts.length === 0) {
     return <p>Loading...</p>;
@@ -43,7 +63,7 @@ const Feed = () => {
           <p>No stories available</p>
         )}
       </div>
-      <section className="w-11/12 flex flex-col gap-2">
+      <section className="posts w-11/12 flex flex-col gap-2">
         {posts.posts && posts.posts.length > 0 ? (
           posts.posts.map((post, index) => (
             <article key={index} className="bg-color-5 rounded-lg">
@@ -55,7 +75,7 @@ const Feed = () => {
                       alt={story1.title}
                       className="h-7 w-7 object-cover inline-block rounded-full p-[1.5px] bg-gradient-to-r from-color-1 via-color-2 to-color-4"
                     />
-                    <p className="font-balsamiq font-bold">{story1.title}</p>
+                    <p onClick={() => navigate("/Profile")}  className="font-balsamiq font-bold cursor-pointer">{story1.title}</p>
                   </div>
                 )}
                 {index === 1 && story2 && (

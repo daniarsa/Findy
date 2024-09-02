@@ -1,5 +1,6 @@
-import { getPosts, createPost } from "../services/findyServices"; // Asegúrate de que `createPost` esté importado
+import { getPosts} from "../services/findyServices"; 
 import useAppContext from "./useAppContext";
+import { createPost } from "../services/postServices";
 
 const usePosts = () => {
   const { posts, postsDispatch } = useAppContext();
@@ -20,11 +21,14 @@ const usePosts = () => {
     try {
       const postPosts = await createPost(newPost);
       postsDispatch({ type: "ADD_POSTS", payload: postPosts });
+      console.log('New post added:', postPosts);
+      console.log('Updated posts state:', posts);
     } catch (error) {
       console.error(error);
       postsDispatch({ type: "FETCH_POSTS_FAILURE", payload: error.message });
     }
   };
+  
 
   return {
     posts: posts.posts,

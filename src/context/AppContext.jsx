@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import userReducer from "../reducers/userReducer";
 import postsReducer from "../reducers/postsReducer";
 import storiesReducer from "../reducers/storiesReducer";
-import { getPosts } from "../services/findyServices";
-import { getStories } from "../services/findyServices";
+import { getPosts, getStories } from "../services/findyServices";
 import likesReducer from "../reducers/likesReducer";
+import { createPost } from "../services/postServices";
 
 // Crear el contexto
 export const AppContext = createContext(null);
@@ -45,8 +45,6 @@ export const AppContextProvider = ({ children, initialProfileData }) => {
     fetchStories();
 }, []);
 
-
- 
   const [posts, postsDispatch] = useReducer(postsReducer, {
     posts: [],
     loading: false,
@@ -54,15 +52,17 @@ export const AppContextProvider = ({ children, initialProfileData }) => {
   });
   const [likes, likesDispatch] = useReducer(likesReducer, {});
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const postsData = await getPosts();
-      postsDispatch({ type: 'UPDATE_POSTS', payload: postsData });
-    };
   
-    fetchPosts();
-  }, []);
-  
+  const addPosts = async (newPost) => {
+    postsDispatch({ type: "FETCH_POSTS_REQUEST" });
+    try {
+      const postPosts = await createPost(newPost);
+      postsDispatch({ type: "ADD_POSTS", payload: postPosts });
+    } catch (error) {
+      console.error(error);
+      postsDispatch({ type: "FETCH_POSTS_FAILURE", payload: error.message });
+    }
+  };
 
   const globalState = {
     user,
@@ -75,6 +75,7 @@ export const AppContextProvider = ({ children, initialProfileData }) => {
     storiesDispatch,
     likes,
     likesDispatch,
+    addPosts,
   };
 
   return (

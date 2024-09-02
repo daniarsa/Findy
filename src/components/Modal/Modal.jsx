@@ -1,8 +1,8 @@
 import { Formik } from "formik";
 import PropTypes from "prop-types";
-import { FaFileUpload } from "react-icons/fa";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
+import fileUpload from "../../services/fileUpload";
 
 const Modal = ({ onClose }) => {
   const { addPosts } = useContext(AppContext);
@@ -12,9 +12,9 @@ const Modal = ({ onClose }) => {
     description: "",
   };
 
-  const handleSubmit = async (values) => {
+  const onSubmit = async (values) => {
     if (values.image) {
-      const photo = await FaFileUpload(values.image);
+      const photo = await fileUpload(values.image);
       values.image = photo ? photo : "";
     }
     values.likes = 0;
@@ -32,7 +32,7 @@ const Modal = ({ onClose }) => {
           <h2>Agregar publicación</h2>
           <button className="cerrar" onClick={onClose}>X</button>
         </section>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik initialValues={initialValues} onSubmit={onSubmit}>
           {({ handleSubmit, getFieldProps, setFieldValue }) => (
             <form onSubmit={handleSubmit}>
               <input
