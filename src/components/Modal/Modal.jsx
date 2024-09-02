@@ -26,15 +26,15 @@ const Modal = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-4 rounded-md shadow-lg w-3/4">
-        <section className="flex justify-between items-center">
-          <h2>Agregar publicación</h2>
+    <div className="fixed inset-0 flex flex-wrap items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white p-4 rounded-md shadow-lg font-balsamiq">
+        <section className="flex justify-between items-center pb-3">
+          <h2 className="text-2xl">Agregar publicación</h2>
           <button className="cerrar" onClick={onClose}>X</button>
         </section>
         <Formik initialValues={initialValues} onSubmit={onSubmit}>
           {({ handleSubmit, getFieldProps, setFieldValue }) => (
-            <form onSubmit={handleSubmit}>
+            <form className="flex flex-col" onSubmit={handleSubmit}>
               <input
                 type="file"
                 onChange={(e) => {
@@ -42,12 +42,13 @@ const Modal = ({ onClose }) => {
                   setFieldValue("image", file);
                 }}
               />
+              <label className="pt-2" htmlFor="">Descripción de la publicación</label>
               <input
+                className="border-solid border-2 border-color-4 rounded-lg"
                 type="text"
-                placeholder="Descripción de la publicación"
                 {...getFieldProps("description")}
               />
-              <button type="submit">Agregar publicación</button>
+              <button type="submit" className="bg-color-1 py-2 rounded-full text-color-5 mt-2">Agregar publicación</button>
             </form>
           )}
         </Formik>
