@@ -8,6 +8,7 @@ import { MdOutlineAdd } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../../context/AppContext";
 import { getPosts } from "../../services/findyServices";
+import LikeButton from "../../components/LikeButton/LikeButton";
 
 const Feed = () => {
   const { posts, stories, postsDispatch } = useAppContext();
@@ -75,7 +76,7 @@ const Feed = () => {
                       alt={story1.title}
                       className="h-7 w-7 object-cover inline-block rounded-full p-[1.5px] bg-gradient-to-r from-color-1 via-color-2 to-color-4"
                     />
-                    <p onClick={() => navigate("/Profile")}  className="font-balsamiq font-bold cursor-pointer">{story1.title}</p>
+                    <p onClick={() => navigate("/Profile")} className="font-balsamiq font-bold cursor-pointer">{story1.title}</p>
                   </div>
                 )}
                 {index === 1 && story2 && (
@@ -95,7 +96,9 @@ const Feed = () => {
               <div className="px-4 pt-4 pb-2">
                 <div className="flex flex-row justify-between items-start">
                   <div className="flex flex-row items-center gap-3 text-font-color-1">
-                    <div><FaRegHeart className="w-7 h-7 mb-1 " /><p className="text-[10px] font-balsamiq">{post.likes}</p></div>
+                    <div><LikeButton buttonClass="posts-like w-7 h-7 mb-1"
+                      iconClass="details-like-icon w-7 h-7 mb-1">
+                    </LikeButton><p className="text-[10px] font-balsamiq">{post.likes}</p></div>
                     <div><FaRegComment className="w-7 h-7 mb-1" /><p className="text-[10px] font-balsamiq">{post.commentsCount}</p></div>
                     <div><TbLocationShare className="w-7 h-7 mb-1" /><p className="text-[10px] font-balsamiq">{post.share}</p></div>
                   </div>
