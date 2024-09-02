@@ -55,7 +55,7 @@ const Login = () => {
                     `,
         });
 
-        navigate("/Details");
+        navigate("/");
       } else {
         Swal.fire({
           title: "Error",
