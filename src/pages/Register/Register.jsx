@@ -28,7 +28,7 @@ const Register = () => {
       <main className="flex flex-col justify-center items-center w-full max-w-xs space-y-6 mb-6">
         <figure className="flex justify-center items-center mb-2">
           <img
-            src="src/assets/LOGOLOGO 3.png"
+            src="https://i.ibb.co/7SnGfv2/LOGOLOGO-3.png"
             alt="Logo"
             className="object-cover h-10"
           />
