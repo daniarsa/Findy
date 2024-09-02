@@ -7,20 +7,22 @@ import Register from "../pages/Register/Register"
 import NoMatch from "../pages/NoMatch/NoMatch"
 import Details from "../pages/Details/Details"
 import Feed from "../pages/Feed/Feed"
+import useAppContext from "../hooks/useAppContext";
 import Profile from "../pages/Profile/Profile"
 
 
 const AppRouter = () => {
+    const { user } = useAppContext();
     return (
         <Router>
             <Routes>
-                <Route element={<PublicRoutes isAuthenticated={false} />}>
+                <Route element={<PublicRoutes isAuthenticated={user.isAuth} />}>
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
                 </Route>
                 <Route path="/" element={<Layout />}>
                     <Route path="*" element={<NoMatch />} />
-                    <Route element={<PrivateRoutes isAuthenticated={false} />}>
+                    <Route element={<PrivateRoutes isAuthenticated={user.isAuth} />}>
                         <Route index element={<Feed />} />
                         <Route path="details/:id" element={<Details />} />
                         <Route path="Profile" element={<Profile />} />
