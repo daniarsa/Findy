@@ -4,7 +4,7 @@ const likesReducer = (state, action) => {
       const { postId } = action.payload;
       return {
         ...state,
-        [postId]: !state[postId],  // Alterna el estado del like para el postId
+        [postId]: !state[postId],  
       };
     }
     default:

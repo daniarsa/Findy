@@ -1,5 +1,5 @@
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { useLikes } from "../../context/AppContext"; // Asegúrate de que este hook esté bien configurado
+import { useLikes } from "../../context/AppContext"; 
 import { useState } from 'react';
 import PropTypes from "prop-types";
 
@@ -22,8 +22,8 @@ const LikeButton = ({ buttonClass, iconClass }) => {
 };
 
 LikeButton.propTypes = {
-  buttonClass: PropTypes.string.isRequired, // Validación para buttonClass
-  iconClass: PropTypes.string.isRequired,   // Validación para iconClass
+  buttonClass: PropTypes.string.isRequired, 
+  iconClass: PropTypes.string.isRequired,   
 };
 
 export default LikeButton;
