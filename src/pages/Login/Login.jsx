@@ -39,8 +39,6 @@ const Login = () => {
           confirmButtonColor: "#FF7674",
           color: "#2F2F2F",
           width: "80%",
-          background:
-            "url(src/assets/Group 28.jpg) no-repeat center center",
           customClass: {
             popup: "rounded-lg p-6",
             title: "font-balsamiq text-xl",
@@ -63,8 +61,6 @@ const Login = () => {
           confirmButtonColor: "#FF7674",
           color: "#2F2F2F",
           width: "80%",
-          background:
-            "url(src/assets/Group 28.jpg) no-repeat center center",
           customClass: {
             popup: "rounded-lg p-6",
             title: "font-balsamiq text-xl",
