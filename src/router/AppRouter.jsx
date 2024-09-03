@@ -19,9 +19,9 @@ const AppRouter = () => {
                 <Route element={<PublicRoutes isAuthenticated={user.isAuth} />}>
                     <Route path="login" element={<Login />} />
                     <Route path="register" element={<Register />} />
+                    <Route path="*" element={<NoMatch />} />
                 </Route>
                 <Route path="/" element={<Layout />}>
-                    <Route path="*" element={<NoMatch />} />
                     <Route element={<PrivateRoutes isAuthenticated={user.isAuth} />}>
                         <Route index element={<Feed />} />
                         <Route path="details/:id" element={<Details />} />

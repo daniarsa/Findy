@@ -73,7 +73,7 @@ const Details = () => {
         </div>
       </div>
 
-      <div className="relative w-80 h-20 ml-[35px] lg:ml-[30px] inset-x-0 bottom-[45px] p-4 bg-white text-font-color-2 flex justify-end rounded-3xl">
+      <div className="relative w-80 h-20 left-1/2 transform -translate-x-1/2 bottom-[60px] p-4 bg-white text-font-color-2 flex justify-end rounded-3xl">
         <img
           src={profileData.profileImageUrl}
           alt="Jennie Kim"

@@ -27,7 +27,7 @@ const profileReducer = (state, action) => {
 export const AppContextProvider = ({ children, initialProfileData }) => {
   const [user, userDispatch] = useReducer(userReducer, {
     user: null,
-    isAuth: true,
+    isAuth: false,
   });
 
   const [profileData, profileDispatch] = useReducer(profileReducer, initialProfileData);
